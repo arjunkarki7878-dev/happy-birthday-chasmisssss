@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday Chasmiss 🤓❤️</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    background: linear-gradient(to bottom, #ffdde1, #ee9ca7);
+    color: #fff;
+    overflow-x: hidden;
+}
+
+h1 {
+    margin-top: 30px;
+    font-size: 2.5em;
+}
+
+#typing {
+    font-size: 2em;
+    font-weight: bold;
+    margin-top: 10px;
+    text-align: center;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 1.2em;
+    margin-top: 20px;
+    border: none;
+    border-radius: 10px;
+    background: #ff4d6d;
+    color: white;
+    cursor: pointer;
+}
+
+/* Fixed slideshow frame */
+#slideshow {
+    margin-top: 30px;
+    width: 350px;   /* fixed frame width */
+    height: 450px;  /* fixed frame height */
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+}
+
+#slideshow img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;  /* fill the frame without stretching */
+    transition: opacity 0.5s ease-in-out;
+    display: block;
+}
+
+#counter {
+    margin-top: 20px;
+    font-size: 1.3em;
+}
+
+/* Confetti */
+.confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    background: white;
+    top: -10px;
+    animation: fall linear forwards;
+}
+
+@keyframes fall {
+    to { transform: translateY(100vh); }
+}
+
+@media (max-width: 500px) {
+    h1 { font-size: 2em; }
+    #typing { font-size: 1.5em; }
+    #slideshow { width: 90%; height: auto; }
+    #slideshow img { height: auto; }
+}
+</style>
+</head>
+
+<body>
+
+<h1>Happy Birthday</h1>
+<div id="typing"></div>
+
+<button onclick="startSurprise()">Click Me 💌</button>
+
+<div id="slideshow">
+    <img id="slide" src="photo1.jpg">
+</div>
+
+<div id="counter"></div>
+
+<audio id="music" autoplay loop>
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+// Typing effect
+const text = "Chasmiss ❤️";
+let i = 0;
+function typing() {
+    if (i < text.length) {
+        document.getElementById("typing").innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typing, 100);
+    }
+}
+typing();
+
+// Slideshow - photo1.jpg to photo20.jpg
+const images = [];
+for (let n = 1; n <= 20; n++) {
+    images.push(`photo${n}.jpg`);
+}
+
+let index = 0;
+const slide = document.getElementById("slide");
+
+function showNextImage() {
+    index = (index + 1) % images.length;
+    const nextImg = new Image();
+    nextImg.src = images[index];
+    nextImg.onload = () => {
+        slide.style.opacity = 0;
+        setTimeout(() => {
+            slide.src = images[index];
+            slide.style.opacity = 1;
+        }, 200);
+    };
+}
+
+setInterval(showNextImage, 3000);
+
+// Love counter
+const startDate = new Date("May 10, 2025");
+function updateCounter() {
+    const now = new Date();
+    const diff = now - startDate;
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    document.getElementById("counter").innerHTML =
+        "❤️ We have been together for " + days + " days ❤️";
+}
+updateCounter();
+setInterval(updateCounter, 1000*60*60);
+
+// Confetti
+function startSurprise() {
+    for (let i = 0; i < 100; i++) {
+        let confetti = document.createElement("div");
+        confetti.className = "confetti";
+        confetti.style.left = Math.random() * 100 + "vw";
+        confetti.style.animationDuration = (Math.random() * 3 + 2) + "s";
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 5000);
+    }
+}
+</script>
+
+</body>
+</html>
